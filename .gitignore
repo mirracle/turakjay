@@ -22,3 +22,4 @@ media/
 static/
 locustfile.py
 venv_turakjay
+turakjay/settings_local.py
