@@ -25,6 +25,8 @@ SECRET_KEY = '18w#1r9hx_hv^-4*2^j(tj-02$s%ic1&!b=8mj=isoga6-3u^b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 ALLOWED_HOSTS = ['*']
 
 
@@ -139,6 +141,21 @@ OLD_PASSWORD_FIELD_ENABLED = True
 
 REST_AUTH_REGISTER_SERIALIZERS = {
    'REGISTER_SERIALIZER': 'client.serializers.RegisterSerializer',
+}
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+)
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+            'rest_framework.authentication.TokenAuthentication',
+        ]
 }
 
 AUTH_USER_MODEL = 'client.User'
