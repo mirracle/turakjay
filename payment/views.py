@@ -8,3 +8,4 @@ class PaymentView(ModelViewSet):
     queryset = Payment.objects.all()
     lookup_field = 'pk'
     serializer_class = PaymentSerializer
+

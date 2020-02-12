@@ -47,6 +47,7 @@ class User(AbstractUser):
     square = models.PositiveIntegerField('Площадь', blank=True, null=True, default=0)
     price = models.PositiveIntegerField('Цена за кв.м', blank=True, null=True, default=0)
     bonus = models.PositiveSmallIntegerField('Бонус', blank=True, null=True, default=10)
+    contribution = models.PositiveIntegerField('Вклад', blank=True, null=True, default=0)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -67,6 +68,7 @@ class User(AbstractUser):
         user.square = data['square']
         user.price = data['price']
         user.bonus = data['bonus']
+        user.contribution = data['contribution']
         if 'password1' in data:
             user.set_password(data["password1"])
         if commit:
