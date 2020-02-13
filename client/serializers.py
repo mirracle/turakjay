@@ -13,7 +13,7 @@ class RegisterSerializer(serializers.Serializer):
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
     full_name = serializers.CharField(write_only=True)
-    invited = serializers.CharField(source='invited_id', allow_blank=True)
+    invited = serializers.CharField(allow_blank=True)
     price = serializers.IntegerField(write_only=True, allow_null=True)
     bonus = serializers.IntegerField(write_only=True, allow_null=True)
     phone_number = serializers.CharField(write_only=True)
@@ -51,13 +51,12 @@ class RegisterSerializer(serializers.Serializer):
         return phone_number
 
     def get_cleaned_data(self):
-        print(self.validated_data.get('full_name', ''))
         return {
             'password1': self.validated_data.get('password1', ''),
             'email': self.validated_data.get('email', ''),
             'bonus': self.validated_data.get('bonus', ''),
             'price': self.validated_data.get('price', ''),
-            'invited': self.validated_data.get('invited', None),
+            'invited': self.validated_data.get('invited', ''),
             'full_name': self.validated_data.get('full_name', ''),
             'phone_number': self.validated_data.get('phone_number', ''),
         }
@@ -70,9 +69,7 @@ class RegisterSerializer(serializers.Serializer):
         return user
 
 
-
 class UserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = get_user_model()
         fields = ('full_name', 'phone_number', 'invited', 'square', 'price', 'bonus', 'id', 'contribution')
@@ -89,11 +86,16 @@ class UserDetailSerializer(UserSerializer):
 
 class TokenSerializer(serializers.ModelSerializer):
     pk = serializers.SerializerMethodField()
+    moder = serializers.SerializerMethodField()
 
     class Meta:
         model = TokenModel
-        fields = ('key', 'pk')
+        fields = ('key', 'pk', 'moder')
 
     @staticmethod
     def get_pk(obj):
         return obj.user.pk
+
+    @staticmethod
+    def get_moder(obj):
+        return obj.user.is_superuser
