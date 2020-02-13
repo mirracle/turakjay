@@ -14,11 +14,9 @@ class RegisterSerializer(serializers.Serializer):
     password2 = serializers.CharField(write_only=True)
     full_name = serializers.CharField(write_only=True)
     invited = serializers.CharField(source='invited_id', allow_blank=True)
-    square = serializers.IntegerField(write_only=True, allow_null=True)
     price = serializers.IntegerField(write_only=True, allow_null=True)
     bonus = serializers.IntegerField(write_only=True, allow_null=True)
     phone_number = serializers.CharField(write_only=True)
-    contribution = serializers.IntegerField(write_only=True, allow_null=True)
 
     def validate_email(self, email):
         email = get_adapter().clean_email(email)
@@ -43,9 +41,6 @@ class RegisterSerializer(serializers.Serializer):
         else:
             return None
 
-    def validate_square(self, square):
-        return square
-
     def validate_price(self, price):
         return price
 
@@ -55,9 +50,6 @@ class RegisterSerializer(serializers.Serializer):
     def validate_phone_number(self, phone_number):
         return phone_number
 
-    def validate_contribution(self, contribution):
-        return contribution
-
     def get_cleaned_data(self):
         print(self.validated_data.get('full_name', ''))
         return {
@@ -65,11 +57,9 @@ class RegisterSerializer(serializers.Serializer):
             'email': self.validated_data.get('email', ''),
             'bonus': self.validated_data.get('bonus', ''),
             'price': self.validated_data.get('price', ''),
-            'square': self.validated_data.get('square', ''),
             'invited': self.validated_data.get('invited', None),
             'full_name': self.validated_data.get('full_name', ''),
             'phone_number': self.validated_data.get('phone_number', ''),
-            'contribution': self.validated_data.get('contribution', ''),
         }
 
     def save(self, request):
@@ -84,7 +74,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ('full_name', 'phone_number', 'invited', 'square', 'price', 'bonus', 'id')
+        fields = ('full_name', 'phone_number', 'invited', 'square', 'price', 'bonus', 'id', 'contribution')
 
 
 class UserDetailSerializer(UserSerializer):

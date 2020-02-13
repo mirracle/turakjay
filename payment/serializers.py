@@ -17,8 +17,19 @@ class PaymentSerializer(serializers.ModelSerializer):
         with transaction.atomic():
             payment = Payment.objects.create(**validated_data)
             client = validated_data.get('user')
+            parent = client.invited
             if client.invited:
-                print(client.invited.bonus)
+                parent.contribution += validated_data.get('amount') / parent.bonus
+                client.contribution += validated_data.get('amount') - (
+                            validated_data.get('amount') / parent.bonus)
+                parent.square = int(parent.contribution / parent.price)
+                client.square = int(client.contribution / client.price)
+                client.save()
+                parent.save()
+            else:
+                client.contribution += validated_data.get('amount')
+                client.square = int(client.contribution / client.price)
+                client.save()
         return payment
 
     @staticmethod
