@@ -70,6 +70,7 @@ class RegisterSerializer(serializers.Serializer):
         return user
 
 
+
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -84,3 +85,15 @@ class UserDetailSerializer(UserSerializer):
         fields['children'] = UserDetailSerializer(many=True)
         fields['user_payments'] = PaymentSerializer(many=True)
         return fields
+
+
+class TokenSerializer(serializers.ModelSerializer):
+    pk = serializers.SerializerMethodField()
+
+    class Meta:
+        model = TokenModel
+        fields = ('key', 'pk')
+
+    @staticmethod
+    def get_pk(obj):
+        return obj.user.pk

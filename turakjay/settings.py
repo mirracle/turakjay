@@ -141,6 +141,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 OLD_PASSWORD_FIELD_ENABLED = True
 
+REST_AUTH_SERIALIZERS = {
+    'TOKEN_SERIALIZER': 'client.serializers.TokenSerializer',
+}
+
 REST_AUTH_REGISTER_SERIALIZERS = {
    'REGISTER_SERIALIZER': 'client.serializers.RegisterSerializer',
 }
