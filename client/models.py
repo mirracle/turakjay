@@ -65,10 +65,8 @@ class User(AbstractUser):
         user.full_name = data['full_name']
         user.phone_number = data['phone_number']
         user.invited = data['invited']
-        user.square = data['square']
         user.price = data['price']
         user.bonus = data['bonus']
-        user.contribution = data['contribution']
         if 'password1' in data:
             user.set_password(data["password1"])
         if commit:
