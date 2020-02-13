@@ -72,15 +72,16 @@ class RegisterSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ('full_name', 'phone_number', 'invited', 'square', 'price', 'bonus', 'id', 'contribution')
+        fields = ('full_name', 'phone_number', 'invited', 'square', 'price', 'bonus', 'id', 'contribution',
+                  'self_contribution')
 
 
 class UserDetailSerializer(UserSerializer):
 
     def get_fields(self):
         fields = super(UserDetailSerializer, self).get_fields()
-        fields['children'] = UserDetailSerializer(many=True)
-        fields['user_payments'] = PaymentSerializer(many=True)
+        fields['children'] = UserDetailSerializer(many=True, read_only=True)
+        fields['user_payments'] = PaymentSerializer(many=True, read_only=True)
         return fields
 
 

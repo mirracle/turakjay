@@ -48,6 +48,7 @@ class User(AbstractUser):
     price = models.PositiveIntegerField('Цена за кв.м', blank=True, null=True, default=0)
     bonus = models.PositiveSmallIntegerField('Бонус', blank=True, null=True, default=10)
     contribution = models.PositiveIntegerField('Вклад', blank=True, null=True, default=0)
+    self_contribution = models.PositiveIntegerField('Свой Вклад', blank=True, null=True, default=0)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
