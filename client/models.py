@@ -45,7 +45,7 @@ class User(AbstractUser):
     phone_number = PhoneNumberField('Номер телефона')
     invited = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True, related_name='children')
     square = models.PositiveIntegerField('Площадь', blank=True, null=True, default=0)
-    price = models.PositiveIntegerField('Цена за кв.м', blank=True, null=True, default=0)
+    price = models.PositiveIntegerField('Цена за кв.м', default=1, blank=True)
     bonus = models.PositiveSmallIntegerField('Бонус', blank=True, null=True, default=10)
     contribution = models.PositiveIntegerField('Вклад', blank=True, null=True, default=0)
     self_contribution = models.PositiveIntegerField('Свой Вклад', blank=True, null=True, default=0)

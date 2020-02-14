@@ -20,15 +20,15 @@ class PaymentSerializer(serializers.ModelSerializer):
             parent = client.invited
             if client.invited:
                 parent.contribution += validated_data.get('amount') / parent.bonus
-                client.contribution += validated_data.get('amount') - (
+                client.self_contribution += validated_data.get('amount') - (
                             validated_data.get('amount') / parent.bonus)
                 parent.square = int(parent.contribution / parent.price)
                 client.square = int(client.contribution / client.price)
                 client.save()
                 parent.save()
             else:
-                client.contribution += validated_data.get('amount')
-                client.square = int(client.contribution / client.price)
+                client.self_contribution += validated_data.get('amount') - (validated_data.get('amount') / 10)
+                client.square = int(client.self_contribution / client.price)
                 client.save()
         return payment
 
