@@ -8,7 +8,7 @@ from .models import Payment
 
 
 class PaymentView(ModelViewSet):
-    queryset = Payment.objects.all()
+    queryset = Payment.objects.filter(user__isnull=False)
     lookup_field = 'pk'
     serializer_class = PaymentSerializer
 
