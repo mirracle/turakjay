@@ -112,6 +112,7 @@ class UserShortSerializer(serializers.ModelSerializer):
 class TokenSerializer(serializers.ModelSerializer):
     pk = serializers.SerializerMethodField()
     moder = serializers.SerializerMethodField()
+    name = serializers.SerializerMethodField()
 
     class Meta:
         model = TokenModel
