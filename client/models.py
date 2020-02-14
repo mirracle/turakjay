@@ -49,6 +49,9 @@ class User(AbstractUser):
     bonus = models.PositiveSmallIntegerField('Бонус', blank=True, null=True, default=10)
     contribution = models.PositiveIntegerField('Вклад', blank=True, null=True, default=0)
     self_contribution = models.PositiveIntegerField('Свой Вклад', blank=True, null=True, default=0)
+    total_payed = models.PositiveIntegerField('Всего оплаченно', blank=True, null=True, default=0)
+    lost = models.PositiveIntegerField('Начисленно родителю', blank=True, null=True, default=0)
+    bonus_count = models.PositiveIntegerField('Заработанно бонусов', blank=True, null=True, default=0)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

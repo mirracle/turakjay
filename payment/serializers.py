@@ -18,18 +18,24 @@ class PaymentSerializer(serializers.ModelSerializer):
             payment = Payment.objects.create(**validated_data)
             client = validated_data.get('user')
             parent = client.invited
-            if client.invited:
-                parent.contribution += validated_data.get('amount') / parent.bonus
-                client.self_contribution += validated_data.get('amount') - (
-                            validated_data.get('amount') / parent.bonus)
+            client.total_payed += validated_data.get('amount')
+            client_lost = int(validated_data.get('amount') / 100 * 10)
+            if parent:
+                parent_get = int(validated_data.get('amount') / 100 * parent.bonus)
+                parent.contribution += parent_get
+                parent.bonus_count += parent_get
                 parent.square = int(parent.contribution / parent.price)
-                client.square = int(client.contribution / client.price)
-                client.save()
+                client.self_contribution += validated_data.get('amount') - parent_get
+                client.contribution += validated_data.get('amount') - parent_get
+                client.lost += parent_get
+                client.square = int(client.self_contribution / client.price)
                 parent.save()
             else:
-                client.self_contribution += validated_data.get('amount') - (validated_data.get('amount') / 10)
+                client.self_contribution += validated_data.get('amount') - client_lost
+                client.contribution += validated_data.get('amount') - client_lost
+                client.lost += client_lost
                 client.square = int(client.self_contribution / client.price)
-                client.save()
+            client.save()
         return payment
 
     @staticmethod

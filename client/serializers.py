@@ -76,7 +76,15 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ('full_name', 'phone_number', 'invited', 'square', 'price', 'bonus', 'id', 'contribution',
-                  'self_contribution', 'invited_name')
+                  'self_contribution', 'invited_name', 'total_payed', 'lost', 'bonus_count')
+        extra_kwargs = {
+            'bonus_count': {'read_only': True},
+            'lost': {'read_only': True},
+            'total_payed': {'read_only': True},
+            'self_contribution': {'read_only': True},
+            'contribution': {'read_only': True},
+            'square': {'read_only': True},
+        }
 
     @staticmethod
     def get_invited_name(obj):
@@ -107,7 +115,11 @@ class TokenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TokenModel
-        fields = ('key', 'pk', 'moder')
+        fields = ('key', 'pk', 'moder', 'name')
+
+    @staticmethod
+    def get_name(obj):
+        return obj.user.full_name
 
     @staticmethod
     def get_pk(obj):
