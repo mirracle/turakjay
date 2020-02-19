@@ -52,6 +52,7 @@ class User(AbstractUser):
     total_payed = models.PositiveIntegerField('Всего оплаченно', blank=True, null=True, default=0)
     lost = models.PositiveIntegerField('Начисленно родителю', blank=True, null=True, default=0)
     bonus_count = models.PositiveIntegerField('Заработанно бонусов', blank=True, null=True, default=0)
+    position = models.CharField('Должность', max_length=64, blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -71,6 +72,7 @@ class User(AbstractUser):
         user.invited = data['invited']
         user.price = data['price']
         user.bonus = data['bonus']
+        user.position = data['position']
         if 'password1' in data:
             user.set_password(data["password1"])
         if commit:

@@ -17,6 +17,7 @@ class RegisterSerializer(serializers.Serializer):
     invited = serializers.CharField(allow_blank=True)
     price = serializers.IntegerField(write_only=True, required=False)
     bonus = serializers.IntegerField(write_only=True, required=False)
+    position = serializers.CharField(write_only=True, required=False)
     phone_number = serializers.CharField(write_only=True)
 
     def validate_email(self, email):
@@ -48,6 +49,9 @@ class RegisterSerializer(serializers.Serializer):
     def validate_bonus(self, bonus):
         return bonus
 
+    def validate_position(self, position):
+        return position
+
     def validate_phone_number(self, phone_number):
         return phone_number
 
@@ -57,6 +61,7 @@ class RegisterSerializer(serializers.Serializer):
             'email': self.validated_data.get('email', ''),
             'bonus': self.validated_data.get('bonus', 10),
             'price': self.validated_data.get('price', 450),
+            'position': self.validated_data.get('position', None),
             'invited': self.validated_data.get('invited', ''),
             'full_name': self.validated_data.get('full_name', ''),
             'phone_number': self.validated_data.get('phone_number', ''),
@@ -76,7 +81,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ('full_name', 'phone_number', 'invited', 'square', 'price', 'bonus', 'id', 'contribution',
-                  'self_contribution', 'invited_name', 'total_payed', 'lost', 'bonus_count')
+                  'self_contribution', 'invited_name', 'total_payed', 'lost', 'bonus_count', 'position')
         extra_kwargs = {
             'bonus_count': {'read_only': True},
             'lost': {'read_only': True},
