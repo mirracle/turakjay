@@ -6,7 +6,7 @@ from .serializers import UserSerializer, UserDetailSerializer, UserShortSerializ
 
 
 class UserView(ModelViewSet):
-    queryset = User.objects.filter(is_superuser=False)
+    queryset = User.objects.all()
     lookup_field = 'pk'
     serializer_class = UserSerializer
 
@@ -18,5 +18,5 @@ class UserDetailView(ModelViewSet):
 
 
 class UserShortView(ModelViewSet):
-    queryset = User.objects.filter(is_superuser=False)
+    queryset = User.objects.all()
     serializer_class = UserShortSerializer
