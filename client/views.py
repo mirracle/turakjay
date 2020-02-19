@@ -12,7 +12,7 @@ class UserView(ModelViewSet):
 
 
 class UserDetailView(ModelViewSet):
-    queryset = User.objects.all(is_superuser=False)
+    queryset = User.objects.filter(is_superuser=False)
     lookup_field = 'pk'
     serializer_class = UserDetailSerializer
 
