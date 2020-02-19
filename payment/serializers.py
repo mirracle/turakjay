@@ -28,13 +28,13 @@ class PaymentSerializer(serializers.ModelSerializer):
                 client.self_contribution += validated_data.get('amount') - parent_get
                 client.contribution += validated_data.get('amount') - parent_get
                 client.lost += parent_get
-                client.square = int(client.self_contribution / client.price)
+                client.square = int(client.contribution / client.price)
                 parent.save()
             else:
                 client.self_contribution += validated_data.get('amount') - client_lost
                 client.contribution += validated_data.get('amount') - client_lost
                 client.lost += client_lost
-                client.square = int(client.self_contribution / client.price)
+                client.square = int(client.contribution / client.price)
             client.save()
         return payment
 
