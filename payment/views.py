@@ -10,7 +10,9 @@ from .models import Payment, ExchangeRates
 class ExchangeRatesView(ModelViewSet):
     queryset = ExchangeRates.objects.all().first()
     serializer_class = ExchangeRatesSerializer
-    lookup_field = 'pk'
+
+    def get_object(self):
+        return ExchangeRates.objects.all().first()
 
 
 class PaymentView(ModelViewSet):
