@@ -61,7 +61,7 @@ class RegisterSerializer(serializers.Serializer):
             'email': self.validated_data.get('email', ''),
             'bonus': self.validated_data.get('bonus', 10),
             'price': self.validated_data.get('price', 450),
-            'position': self.validated_data.get('position', None),
+            'position': self.validated_data.get('position', ''),
             'invited': self.validated_data.get('invited', ''),
             'full_name': self.validated_data.get('full_name', ''),
             'phone_number': self.validated_data.get('phone_number', ''),

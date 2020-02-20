@@ -52,7 +52,7 @@ class User(AbstractUser):
     total_payed = models.PositiveIntegerField('Всего оплаченно', blank=True, null=True, default=0)
     lost = models.PositiveIntegerField('Начисленно родителю', blank=True, null=True, default=0)
     bonus_count = models.PositiveIntegerField('Заработанно бонусов', blank=True, null=True, default=0)
-    position = models.CharField('Должность', max_length=64, blank=True, null=True)
+    position = models.CharField('Должность', max_length=128, blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
