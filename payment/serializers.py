@@ -9,7 +9,7 @@ class ExchangeRatesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ExchangeRates
-        fields = ('course',)
+        fields = ('course', 'id')
 
 
 class PaymentSerializer(serializers.ModelSerializer):
