@@ -23,3 +23,11 @@ class UserDetailView(ModelViewSet):
 class UserShortView(ModelViewSet):
     queryset = User.objects.filter(is_superuser=False)
     serializer_class = UserShortSerializer
+
+
+class UserPkShortView(ModelViewSet):
+    serializer_class = UserShortSerializer
+
+    def get_queryset(self):
+        instance = User.objects.get(pk=self.kwargs.get('pk'))
+        return User.objects.filter(id__lt=instance.pk)
