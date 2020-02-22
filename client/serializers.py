@@ -1,5 +1,3 @@
-import sys
-
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
@@ -8,8 +6,6 @@ from rest_auth.models import TokenModel
 
 from client.models import User
 from payment.serializers import PaymentSerializer
-
-sys.setrecursionlimit(1500)
 
 
 class RegisterSerializer(serializers.Serializer):
