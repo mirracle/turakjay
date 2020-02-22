@@ -79,7 +79,7 @@ class UserSerializer(serializers.ModelSerializer):
     invited_name = serializers.SerializerMethodField()
 
     class Meta:
-        model = get_user_model()
+        model = User
         fields = ('full_name', 'phone_number', 'invited', 'square', 'price', 'bonus', 'id', 'contribution',
                   'self_contribution', 'invited_name', 'total_payed', 'lost', 'bonus_count', 'position')
         extra_kwargs = {
