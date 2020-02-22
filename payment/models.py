@@ -21,7 +21,7 @@ class Payment(models.Model):
     currency = models.CharField('Ваоюта', choices=CURRENCY_TYPES, default='kgs', max_length=4)
 
     def __str__(self):
-        return f'{self.user.full_name} {self.amount}'
+        return f'{self.amount}'
 
 
 class ExchangeRates(models.Model):
