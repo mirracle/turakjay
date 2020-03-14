@@ -9,7 +9,6 @@ from payment.serializers import PaymentSerializer
 
 
 class RegisterSerializer(serializers.Serializer):
-
     email = serializers.EmailField(required=True, write_only=True)
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
@@ -81,13 +80,19 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('full_name', 'phone_number', 'invited', 'square', 'price', 'bonus', 'id', 'contribution',
-                  'self_contribution', 'invited_name', 'total_payed', 'lost', 'bonus_count', 'position')
+                  'contribution_usd', 'self_contribution', 'self_contribution_usd', 'invited_name', 'total_payed',
+                  'total_payed_usd', 'lost', 'lost_usd', 'bonus_count', 'bonus_count_usd', 'position',)
         extra_kwargs = {
             'bonus_count': {'read_only': True},
+            'bonus_count_usd': {'read_only': True},
             'lost': {'read_only': True},
+            'lost_usd': {'read_only': True},
             'total_payed': {'read_only': True},
+            'total_payed_usd': {'read_only': True},
             'self_contribution': {'read_only': True},
+            'self_contribution_usd': {'read_only': True},
             'contribution': {'read_only': True},
+            'contribution_usd': {'read_only': True},
             'square': {'read_only': True},
         }
 

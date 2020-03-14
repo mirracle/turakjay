@@ -17,6 +17,8 @@ class Payment(models.Model):
 
     user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, related_name='user_payments', null=True)
     amount = models.PositiveIntegerField('Сумма', default=0)
+    amount_kgs = models.PositiveIntegerField('Сумма Сом', default=0)
+    amount_usd = models.PositiveIntegerField('Сумма Usd', default=0)
     pay_date = models.DateTimeField('Дата оплаты', auto_now_add=True)
     currency = models.CharField('Ваоюта', choices=CURRENCY_TYPES, default='kgs', max_length=4)
 

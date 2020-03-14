@@ -48,10 +48,15 @@ class User(AbstractUser):
     price = models.PositiveIntegerField('Цена за кв.м', default=1, blank=True)
     bonus = models.PositiveSmallIntegerField('Бонус', blank=True, null=True, default=10)
     contribution = models.PositiveIntegerField('Вклад', blank=True, null=True, default=0)
+    contribution_usd = models.PositiveIntegerField('Вклад', blank=True, null=True, default=0)
     self_contribution = models.PositiveIntegerField('Свой Вклад', blank=True, null=True, default=0)
+    self_contribution_usd = models.PositiveIntegerField('Свой Вклад', blank=True, null=True, default=0)
     total_payed = models.PositiveIntegerField('Всего оплаченно', blank=True, null=True, default=0)
+    total_payed_usd = models.PositiveIntegerField('Всего оплаченно', blank=True, null=True, default=0)
     lost = models.PositiveIntegerField('Начисленно родителю', blank=True, null=True, default=0)
+    lost_usd = models.PositiveIntegerField('Начисленно родителю', blank=True, null=True, default=0)
     bonus_count = models.PositiveIntegerField('Заработанно бонусов', blank=True, null=True, default=0)
+    bonus_count_usd = models.PositiveIntegerField('Заработанно бонусов', blank=True, null=True, default=0)
     position = models.CharField('Должность', max_length=128, blank=True, null=True)
 
     USERNAME_FIELD = 'email'
