@@ -28,29 +28,35 @@ class PaymentView(ModelViewSet):
     def perform_destroy(self, instance):
         with transaction.atomic():
             user = instance.user
-            if instance.currency == 'kgs':
-                amount = instance.amount
-            else:
-                print(ExchangeRates.objects.all().first().course)
-                amount = int(instance.amount * ExchangeRates.objects.all().first().course)
-            user.total_payed -= amount
+            user.total_payed -= instance.amount_kgs
+            user.total_payed_usd -= instance.amount_usd
             parent = user.invited
-            user_lost = int(amount / 100 * 10)
+            user_lost_kgs = int(instance.amount_kgs / 100 * 10)
+            user_lost_usd = int(instance.amount_usd / 100 * 10)
             if parent:
-                parent_get = int(amount / 100 * parent.bonus)
-                parent.bonus_count -= parent_get
-                parent.contribution -= parent_get
+                parent_get_kgs = int(instance.amount_kgs / 100 * parent.bonus)
+                parent_get_usd = int(instance.amount_usd / 100 * parent.bonus)
+                parent.bonus_count -= parent_get_kgs
+                parent.bonus_count_usd -= parent_get_usd
+                parent.contribution -= parent_get_kgs
+                parent.contribution_usd -= parent_get_usd
                 parent.square = int(parent.contribution / parent.price)
-                user.contribution -= amount - user_lost
-                user.self_contribution -= amount - user_lost
-                user.lost -= user_lost
+                user.contribution -= instance.amount_kgs - user_lost_kgs
+                user.contribution_usd -= instance.amount_usd - user_lost_usd
+                user.self_contribution -= instance.amount_kgs - user_lost_kgs
+                user.self_contribution_usd -= instance.amount_usd - user_lost_usd
+                user.lost -= user_lost_kgs
+                user.lost_usd -= user_lost_usd
                 user.square = int(user.contribution / user.price)
                 parent.save()
                 user.save()
             else:
-                user.contribution -= amount - user_lost
-                user.self_contribution -= amount - user_lost
-                user.lost -= user_lost
+                user.contribution -= instance.amount_kgs - user_lost_kgs
+                user.contribution_usd -= instance.amount_usd - user_lost_usd
+                user.self_contribution -= instance.amount_kgs - user_lost_kgs
+                user.self_contribution_usd -= instance.amount_usd - user_lost_usd
+                user.lost -= user_lost_kgs
+                user.lost_usd -= user_lost_usd
                 user.square = int(user.contribution / user.price)
                 user.save()
             instance.delete()
